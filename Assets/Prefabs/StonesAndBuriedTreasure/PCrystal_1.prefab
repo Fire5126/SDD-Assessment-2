@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1796290564219600, guid: 2485624f732b618439e23cb8081d41dc, type: 3}
       propertyPath: m_Name
-      value: "\u0421rystal_1"
+      value: PCrystal_1
       objectReference: {fileID: 0}
     - target: {fileID: 4623209018381364, guid: 2485624f732b618439e23cb8081d41dc, type: 3}
       propertyPath: m_RootOrder
@@ -82,6 +82,10 @@ PrefabInstance:
     - target: {fileID: 3282063705043109302, guid: 2485624f732b618439e23cb8081d41dc, type: 3}
       propertyPath: m_Color.r
       value: 0.34117648
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282063705043109302, guid: 2485624f732b618439e23cb8081d41dc, type: 3}
+      propertyPath: m_Intensity
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3282063705043109302, guid: 2485624f732b618439e23cb8081d41dc, type: 3}
       propertyPath: m_BoundingSphereOverride.w

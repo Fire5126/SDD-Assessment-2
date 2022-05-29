@@ -84,6 +84,10 @@ PrefabInstance:
       value: 0.34117648
       objectReference: {fileID: 0}
     - target: {fileID: 1683932963985553844, guid: b4572596b6a569946aedef79f222fa22, type: 3}
+      propertyPath: m_Intensity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683932963985553844, guid: b4572596b6a569946aedef79f222fa22, type: 3}
       propertyPath: m_BoundingSphereOverride.w
       value: NaN
       objectReference: {fileID: 0}
