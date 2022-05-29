@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3628868, g: 0.566164, b: 0.84371144, a: 1}
+  m_IndirectSpecularColor: {r: 0.36289757, g: 0.56618446, b: 0.84371066, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -43847,7 +43847,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1575022313315324, guid: b4572596b6a569946aedef79f222fa22, type: 3}
       propertyPath: m_Name
-      value: "\u0421rystal_3 (5)"
+      value: "B\u0421rystal_2 (4)"
       objectReference: {fileID: 0}
     - target: {fileID: 4710692867113544, guid: b4572596b6a569946aedef79f222fa22, type: 3}
       propertyPath: m_RootOrder
@@ -84976,7 +84976,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh42736
+  m_Name: pb_Mesh37396
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
