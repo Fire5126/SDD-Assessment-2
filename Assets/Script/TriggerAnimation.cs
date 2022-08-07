@@ -28,4 +28,10 @@ public class TriggerAnimation : MonoBehaviour
             objectToMove.GetComponent<Animator>().SetTrigger("playerEnters");
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        objectToMove.GetComponent<Animator>().SetTrigger("playerEnters");
+        Debug.Log("Hey");
+    }
 }
