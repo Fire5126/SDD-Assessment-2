@@ -31,7 +31,11 @@ public class TriggerAnimation : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        objectToMove.GetComponent<Animator>().SetTrigger("playerEnters");
-        Debug.Log("Hey");
+        if (other.gameObject.tag == "Player")
+        {
+            objectToMove.GetComponent<Animator>().SetTrigger("playerEnters");
+            Debug.Log("Hey");
+        }
+        
     }
 }
