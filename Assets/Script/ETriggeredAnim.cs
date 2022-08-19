@@ -7,29 +7,32 @@ public class ETriggeredAnim : MonoBehaviour
 {
 
     private bool inRange;
-
+    Animator Drawer;
 
     //Start is called once the game launches
     void Start()
     {
         inRange = false;
+        Drawer = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inRange = true && Input.GetKeyDown("E"))
+        if (inRange == true && Input.GetKeyDown("e"))
         {
-            GetComponent<Animator>().
+            Drawer.SetBool("Open", true);
+            Debug.Log("Open Sesime");
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter (Collider other)
     {
         inRange = true;
+  
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other) 
     {
         inRange = false;
     }
