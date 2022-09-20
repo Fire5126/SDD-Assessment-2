@@ -11,14 +11,16 @@ public class Button : MonoBehaviour
     public UnityEvent KeypadClicked;
 
     // Update is called once per frame
-    private void Update()
-    {
 
-    }
-
-    void OnMouseDown()
+    private void OnMouseDown()
     {
-        KeypadClicked.Invoke();
+        if (Keypad.inCollider == true)
+        {
+            KeypadClicked.Invoke();
+
+            
+        }
+
     }
 
 

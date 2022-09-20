@@ -131,6 +131,13 @@ public class FirstPersonController : MonoBehaviour
 
     #endregion
 
+    #region Audio
+
+    public AudioSource footSteps;
+    public AudioSource running;
+
+    #endregion
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -151,10 +158,15 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
-        if(lockCursor)
+        if (lockCursor == true)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
 
         if(crosshair)
         {
@@ -205,7 +217,22 @@ public class FirstPersonController : MonoBehaviour
         #region Camera
 
         // Control camera movement
-        if(cameraCanMove)
+
+        if (PauseMenu.GameisPaused)
+        {
+            cameraCanMove = false;
+            lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
+
+        }
+        else
+        {
+            cameraCanMove = true;
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
+
+        if (cameraCanMove)
         {
             yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
@@ -362,6 +389,13 @@ public class FirstPersonController : MonoBehaviour
         {
             HeadBob();
         }
+
+        #region Audio
+
+        Sounds();
+
+        #endregion
+
     }
 
     void FixedUpdate()
@@ -525,6 +559,44 @@ public class FirstPersonController : MonoBehaviour
             timer = 0;
             joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
         }
+    }
+
+    private void Sounds()
+    {
+        if  (PauseMenu.GameisPaused == false && Dialgoue.isInteracting == false)
+        {
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                footSteps.enabled = true;
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    running.enabled = true;
+
+                    footSteps.enabled = false;
+                }
+
+                else
+                {
+                    running.enabled = false;
+                }
+
+
+            }
+            else
+            {
+                footSteps.enabled = false;
+                running.enabled = false;
+            }
+
+        }
+        else
+        {
+            footSteps.enabled = false;
+            running.enabled = false;
+        }
+        
     }
 }
 
@@ -728,8 +800,21 @@ public class FirstPersonController : MonoBehaviour
 
         #endregion
 
+        #region Audio
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        GUILayout.Label("Audio", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space();
+
+        fpc.footSteps = (AudioSource)EditorGUILayout.ObjectField(new GUIContent("Foot Steps", "Foot steps sounds attached to the controller."), fpc.footSteps, typeof(AudioSource), true);
+        fpc.running = (AudioSource)EditorGUILayout.ObjectField(new GUIContent("Running", "Running sounds attached to the controller."), fpc.running, typeof(AudioSource), true);
+
+
+        #endregion
+
         //Sets any changes from the prefab
-        if(GUI.changed)
+        if (GUI.changed)
         {
             EditorUtility.SetDirty(fpc);
             Undo.RecordObject(fpc, "FPC Change");
