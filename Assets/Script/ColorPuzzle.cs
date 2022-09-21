@@ -5,15 +5,25 @@ using UnityEngine;
 public class ColorPuzzle : MonoBehaviour
 {
 
+    #region Puzzle Variabe
+
     public GameObject puzzleObj;
     public Material purple;
     public Material yellow;
     public Material cyan;
     public Material white;
 
+    #endregion
+
+    #region Animator Variable
+
     public GameObject animObj;
     Animator animator;
     public string solved;
+
+    #endregion
+
+    #region Display Variables
 
     public GameObject display1;
     public GameObject display2;
@@ -21,16 +31,36 @@ public class ColorPuzzle : MonoBehaviour
     public Material blue;
     public Material green;
 
+    #endregion
+
+    #region Answer Variables
 
     private bool answer1 = false;
     private bool answer2 = false;
     private bool answer3 = false;
 
+    #endregion
+
+    #region Sound Variable
+
+    public AudioClip pressed;
+    public AudioClip right;
+    public AudioClip wrong;
+    AudioSource audioSource;
+
+    #endregion
+
     private string answerInput = "";
 
+    // Start is called before the first frame
     void Start()
     {
+
+        // Assign gameObj's Animator to variable
         animator = animObj.GetComponent<Animator>();
+
+        // Assign gameObj's AudioSource to Variable
+        audioSource = GetComponent<AudioSource>();
 
         answered1();
     }
@@ -42,38 +72,53 @@ public class ColorPuzzle : MonoBehaviour
 
     public void ButtonClicked(string number)
     {
+        // Every Number adds onto input
         answerInput += number;
 
+        // Play Music
+        audioSource.PlayOneShot(pressed);
 
-
+        // Whenever answerInput has 2 or more numbers
         if (answerInput.Length >= 2)
         {
-            if (answerInput == "12" || answerInput == "21" && answer1 == false)
+            if (answerInput == "12" && answer1 == false || answerInput == "21" && answer1 == false)
             {
                 answered2();
 
             }
-            else if (answerInput == "13" || answerInput == "31" && answer2 == true)
+            else if (answerInput == "13" && answer2 == true || answerInput == "31" && answer2 == true)
             {
 
                 answered3();
             }
-            else if (answerInput == "23" || answerInput == "32" && answer3 == true)
+            else if (answerInput == "23" && answer3 == true || answerInput == "32" && answer3 == true)
             {
-                wait();
 
-                answerInput = "";
+                // Play Music
+                audioSource.PlayOneShot(right);
+
+                // Got to wait subroutine
+                StartCoroutine(wait());
+
+                // Set Boolean Values
                 answer3 = false;
 
+                // Change GameObjects material
                 puzzleObj.GetComponent<MeshRenderer>().material = white;
 
+                // Set bool value for Animator to True
                 animator.SetBool(solved, true);
+
+
             }
             else
             {
-                wait();
 
-                answerInput = "";
+                // Play Music
+                audioSource.PlayOneShot(wrong);
+
+                // Got to wait subroutine
+                StartCoroutine(wait());
 
             }
 
@@ -84,23 +129,34 @@ public class ColorPuzzle : MonoBehaviour
 
     private void answered1()
     {
-        wait();
 
+        // Set Boolean Values
         answer1 = false;
-        answerInput = "";
+        answer2 = false;
+        answer3 = false;
 
+        // Change GameObjects material
         puzzleObj.GetComponent<MeshRenderer>().material = purple;
+
+
 
     }
 
     private void answered2()
     {
-        wait();
 
+        // Play Music
+        audioSource.PlayOneShot(right);
+
+        // Got to wait subroutine
+        StartCoroutine(wait());
+
+        // Set Boolean Values
         answer1 = true;
         answer2 = true;
-        answerInput = "";
+        answer3 = false;
 
+        // Change GameObjects material
         puzzleObj.GetComponent<MeshRenderer>().material = yellow;
 
 
@@ -108,39 +164,51 @@ public class ColorPuzzle : MonoBehaviour
 
     private void answered3()
     {
-        wait();
 
+        // Play Music
+        audioSource.PlayOneShot(right);
+
+        // Got to wait subroutine
+        StartCoroutine(wait());
+
+        // Set Boolean Values
         answer2 = false;
         answer3 = true;
-        answerInput = "";
 
+        // Change GameObjects material
         puzzleObj.GetComponent<MeshRenderer>().material = cyan;
+
 
     }
 
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(2);
 
+        // Wait 1 second
+        yield return new WaitForSeconds(1);
+
+        // Reset Input
+        answerInput = "";
     }
 
     private void display()
     {
+
+        // Case Structure representing the different types of answers
        switch (answerInput)
         {
             case "1":
 
-                wait();
 
 
                 display1.GetComponent<MeshRenderer>().material = red;
                 display2.GetComponent<MeshRenderer>().material = white;
 
+
                 break;
 
             case "2":
 
-                wait();
 
 
                 display1.GetComponent<MeshRenderer>().material = blue;
@@ -150,7 +218,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "3":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = green;
                 display2.GetComponent<MeshRenderer>().material = white;
@@ -159,7 +226,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "11":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = red;
                 display2.GetComponent<MeshRenderer>().material = red;
@@ -168,7 +234,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "12":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = red;
                 display2.GetComponent<MeshRenderer>().material = blue;
@@ -177,7 +242,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "13":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = red;
                 display2.GetComponent<MeshRenderer>().material = green;
@@ -186,7 +250,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "21":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = blue;
                 display2.GetComponent<MeshRenderer>().material = red;
@@ -195,7 +258,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "22":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = blue;
                 display2.GetComponent<MeshRenderer>().material = blue;
@@ -204,7 +266,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "23":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = blue;
                 display2.GetComponent<MeshRenderer>().material = green;
@@ -213,7 +274,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "31":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = green;
                 display2.GetComponent<MeshRenderer>().material = red;
@@ -222,7 +282,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "32":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = green;
                 display2.GetComponent<MeshRenderer>().material = blue;
@@ -231,7 +290,6 @@ public class ColorPuzzle : MonoBehaviour
 
             case "33":
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = green;
                 display2.GetComponent<MeshRenderer>().material = green;
@@ -240,7 +298,6 @@ public class ColorPuzzle : MonoBehaviour
 
             default:
 
-                wait();
 
                 display1.GetComponent<MeshRenderer>().material = white;
                 display2.GetComponent<MeshRenderer>().material = white;
